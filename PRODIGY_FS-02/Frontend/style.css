@@ -1,0 +1,182 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Login Page */
+.login-body {
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.login-box p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 13px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #4f63d8;
+}
+
+#message {
+    color: red;
+    margin-top: 15px;
+}
+
+/* Dashboard */
+body {
+    background: #f4f6f9;
+}
+
+nav {
+    background: #2d3748;
+    color: white;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav button {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.container {
+    padding: 30px;
+}
+
+.form-card,
+.table-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.form-card h3,
+.table-card h3 {
+    margin-bottom: 20px;
+    color: #2d3748;
+}
+
+.form-card input,
+#searchInput {
+    padding: 12px;
+    margin: 8px;
+    width: 220px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form-card button {
+    padding: 12px 20px;
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.form-card button:hover {
+    background: #2563eb;
+}
+
+#msg {
+    margin-top: 12px;
+    color: green;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+th {
+    background: #2d3748;
+    color: white;
+    padding: 13px;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f1f5f9;
+}
+
+.edit-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 8px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media(max-width: 768px) {
+    .form-card input,
+    #searchInput {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
