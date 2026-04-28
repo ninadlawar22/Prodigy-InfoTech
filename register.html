@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account · AuthSys</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Auth<span>Sys</span></div>
+  </a>
+
+  <div class="card">
+    <div class="card-header">
+      <h1>Create Account</h1>
+      <p>Already have one? <a href="index.html">Sign in →</a></p>
+    </div>
+
+    <div id="alertBox"></div>
+
+    <form id="registerForm" novalidate>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <div class="input-wrap">
+          <input type="text" id="name" name="name" placeholder="Jane Doe" autocomplete="name" required>
+          <span class="icon">👤</span>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email" required>
+          <span class="icon">✉</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Min. 8 chars, uppercase, number…" autocomplete="new-password" required>
+          <span class="icon">🔒</span>
+          <button type="button" class="toggle-pw" id="togglePw" aria-label="Toggle password">👁</button>
+        </div>
+        <div class="strength-bar" id="strengthBar">
+          <span id="s1"></span><span id="s2"></span>
+          <span id="s3"></span><span id="s4"></span><span id="s5"></span>
+        </div>
+        <div class="strength-label" id="strengthLabel"></div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirm">Confirm Password</label>
+        <div class="input-wrap">
+          <input type="password" id="confirm" name="confirm" placeholder="Repeat password" autocomplete="new-password" required>
+          <span class="icon">🔑</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script>
+  // Redirect if already logged in
+  if (Auth.isLoggedIn()) location.href = 'dashboard.html';
+
+  const form      = document.getElementById('registerForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const pwInput   = document.getElementById('password');
+  const bars      = [1,2,3,4,5].map(i => document.getElementById('s' + i));
+  const strengthLabel = document.getElementById('strengthLabel');
+
+  // ── Password strength indicator ───────────────
+  pwInput.addEventListener('input', () => {
+    const score = checkStrength(pwInput.value);
+    bars.forEach((b, i) => {
+      b.style.background = i < score ? strengthColors[score] : 'var(--border)';
+    });
+    strengthLabel.textContent = pwInput.value ? strengthLabels[score] : '';
+    strengthLabel.style.color = strengthColors[score];
+  });
+
+  // ── Toggle password visibility ────────────────
+  document.getElementById('togglePw').addEventListener('click', () => {
+    pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+  });
+
+  // ── Form submit ───────────────────────────────
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert('alertBox');
+
+    const name     = document.getElementById('name').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm').value;
+
+    // Client-side quick checks
+    if (!name || !email || !password || !confirm) {
+      return showAlert('alertBox', 'error', 'All fields are required.');
+    }
+    if (password !== confirm) {
+      return showAlert('alertBox', 'error', 'Passwords do not match.');
+    }
+    if (checkStrength(password) < 3) {
+      return showAlert('alertBox', 'warning', 'Password is too weak. Add uppercase, numbers, and special characters.');
+    }
+
+    setLoading(submitBtn, true, 'Create Account');
+
+    const { ok, data } = await apiFetch('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    setLoading(submitBtn, false, 'Create Account');
+
+    if (ok && data.success) {
+      Auth.setToken(data.token);
+      Auth.setUser(data.user);
+      showAlert('alertBox', 'success', 'Account created! Redirecting…');
+      setTimeout(() => location.href = 'dashboard.html', 1000);
+    } else {
+      const msg = data.errors ? data.errors : (data.message || 'Registration failed.');
+      showAlert('alertBox', 'error', msg);
+    }
+  });
+</script>
+</body>
+</html>
