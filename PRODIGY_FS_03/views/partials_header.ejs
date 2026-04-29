@@ -1,0 +1,14 @@
+<header class="topbar">
+  <a href="/products" class="logo">Local<span>Store</span></a>
+  <nav>
+    <a href="/products">Products</a>
+    <a href="/cart">Cart (<%= cartCount %>)</a>
+    <a href="/support">Support</a>
+    <% if (user) { %>
+      <a href="/orders">My Orders</a>
+      <a href="/logout" class="btn-small">Logout</a>
+    <% } else { %>
+      <a href="/login" class="btn-small">Login</a>
+    <% } %>
+  </nav>
+</header>

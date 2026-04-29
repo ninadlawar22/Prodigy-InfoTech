@@ -1,0 +1,5 @@
+<!DOCTYPE html><html><head><title><%= product.name %></title><link rel="stylesheet" href="/style.css"></head><body>
+<%- include('partials_header') %>
+<div class="detail"><img src="<%= product.image %>"><div><span class="badge"><%= product.category %></span><h1><%= product.name %></h1><p><%= product.description %></p><h2>₹<%= product.price %></h2><form method="POST" action="/cart/add/<%= product.id %>"><button class="primary">Add to Cart</button></form></div></div>
+<section class="reviews"><h2>Customer Reviews</h2><% if(user){ %><form method="POST" action="/review/<%= product.id %>" class="review-form"><select name="rating" required><option value="5">⭐⭐⭐⭐⭐</option><option value="4">⭐⭐⭐⭐</option><option value="3">⭐⭐⭐</option><option value="2">⭐⭐</option><option value="1">⭐</option></select><input name="comment" placeholder="Write your review" required><button>Submit</button></form><% } else { %><p>Please login to add a review.</p><% } %><% reviews.forEach(r=>{ %><div class="review"><b><%= r.name %></b><span><%= '⭐'.repeat(r.rating) %></span><p><%= r.comment %></p></div><% }) %></section>
+</body></html>

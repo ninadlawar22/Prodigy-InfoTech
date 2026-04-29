@@ -1,0 +1,1 @@
+<!DOCTYPE html><html><head><title>My Orders</title><link rel="stylesheet" href="/style.css"></head><body><%- include('partials_header') %><div class="page"><h1>My Orders</h1><% orders.forEach(o=>{ %><a class="order-card" href="/order/<%= o.order_number %>"><b><%= o.order_number %></b><span>₹<%= o.total %></span><span><%= o.status %></span></a><% }) %></div></body></html>

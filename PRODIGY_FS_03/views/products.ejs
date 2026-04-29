@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><title>LocalStore Products</title><link rel="stylesheet" href="/style.css"></head><body>
+<%- include('partials_header') %>
+<section class="hero"><div><h1>Fresh products from your local store</h1><p>Browse groceries, bakery items, dairy, fruits and vegetables online.</p></div></section>
+<form class="filters" method="GET">
+  <input type="text" name="search" placeholder="Search products..." value="<%= query.search || '' %>">
+  <select name="category"><option value="">All Categories</option><% categories.forEach(c=>{ %><option value="<%= c.category %>" <%= query.category===c.category?'selected':'' %>><%= c.category %></option><% }) %></select>
+  <select name="sort"><option value="">Newest</option><option value="low" <%= query.sort==='low'?'selected':'' %>>Price: Low to High</option><option value="high" <%= query.sort==='high'?'selected':'' %>>Price: High to Low</option></select>
+  <button>Apply</button>
+</form>
+<div class="grid">
+<% products.forEach(p=>{ %>
+  <div class="card"><img src="<%= p.image %>" alt="<%= p.name %>"><div class="card-body"><span class="badge"><%= p.category %></span><h3><%= p.name %></h3><p><%= p.description %></p><h2>₹<%= p.price %></h2><div class="actions"><a href="/product/<%= p.id %>">View</a><form method="POST" action="/cart/add/<%= p.id %>"><button>Add to Cart</button></form></div></div></div>
+<% }) %>
+</div>
+</body></html>
