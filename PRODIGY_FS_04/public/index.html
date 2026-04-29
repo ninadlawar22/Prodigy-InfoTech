@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Chat App</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="authPage" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="logo">💬</div>
+      <h1>ChatWave</h1>
+      <p>Real-time rooms and private messaging using WebSocket.</p>
+
+      <div class="tabs">
+        <button id="loginTab" class="active">Login</button>
+        <button id="registerTab">Register</button>
+      </div>
+
+      <form id="authForm">
+        <input type="text" id="username" placeholder="Enter username" autocomplete="username" />
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" />
+        <button type="submit" id="authButton">Login</button>
+      </form>
+      <p id="authMessage" class="message"></p>
+      <small>Tip: Open this app in two browser windows and login with two users to test real-time chat.</small>
+    </div>
+  </div>
+
+  <div id="chatPage" class="chat-wrapper hidden">
+    <aside class="sidebar">
+      <div class="profile">
+        <div class="avatar" id="myAvatar">U</div>
+        <div>
+          <h3 id="myName">User</h3>
+          <span class="online-dot"></span> Online
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout">Logout</button>
+
+      <h4>Chat Rooms</h4>
+      <div class="room-list">
+        <button class="room-btn active" data-room="general"># General</button>
+        <button class="room-btn" data-room="project"># Project</button>
+        <button class="room-btn" data-room="college"># College</button>
+        <button class="room-btn" data-room="friends"># Friends</button>
+      </div>
+
+      <h4>Private Users</h4>
+      <div id="userList" class="user-list"></div>
+    </aside>
+
+    <main class="chat-main">
+      <header class="chat-header">
+        <div>
+          <h2 id="chatTitle"># General</h2>
+          <p id="chatSubtitle">Room chat</p>
+        </div>
+        <div class="status-pill">WebSocket Live</div>
+      </header>
+
+      <section id="messages" class="messages"></section>
+      <p id="typingText" class="typing"></p>
+
+      <form id="messageForm" class="message-form">
+        <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" />
+        <button type="submit">Send ➤</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
